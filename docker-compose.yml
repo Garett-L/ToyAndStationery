@@ -48,11 +48,12 @@ services:
       # 这个路径是容器架构的一部分，所以我们在此显式定义
       - DATABASE_PATH=/data/email_index.db
       - SERVICE_NAME=email-parser
+    user: root
     networks:
       - app-net
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
