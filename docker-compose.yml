@@ -13,7 +13,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./shared/certs:/etc/nginx/certs:ro
+      - /etc/letsencrypt/live/email.toytrust.cn:/etc/letsencrypt/live/email.toytrust.cn:ro
       - shared-logs:/var/log/nginx
     networks:
       - app-net
