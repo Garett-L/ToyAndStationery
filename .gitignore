@@ -1,0 +1,54 @@
+# Docker local development
+docker-compose.override.yml
+.dockerignore
+.env
+
+# Python build artifacts and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# IDE and editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local data and logs - ignoring the entire shared directory
+# to avoid committing secrets, logs, or large data files.
+# If you have specific non-sensitive shared assets, 
+# you can un-ignore them with a '!' rule, e.g., !shared/public/
+shared/
+
+# Test artifacts
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Database files
+*.db
+*.sqlite3

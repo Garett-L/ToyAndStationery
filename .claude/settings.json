@@ -1,0 +1,18 @@
+{
+  "workspace": {
+    "exclude": [
+      "shared/email-parser-data/**",
+      "**/__pycache__/**",
+      "**/*.pyc",
+      ".git/**",
+      "node_modules/**"
+    ]
+  },
+  "aliases": {
+    "up": "docker-compose -f docker-compose.yml up -d --build",
+    "down": "docker-compose -f docker-compose.yml down",
+    "logs": "docker-compose -f docker-compose.yml logs -f",
+    "status": "docker-compose -f docker-compose.yml ps",
+    "rebuild": "docker-compose -f docker-compose.yml build --pull && docker-compose -f docker-compose.yml up -d --force-recreate"
+  }
+}

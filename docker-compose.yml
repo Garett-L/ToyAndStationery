@@ -1,0 +1,74 @@
+# docker-compose.yml - Root Orchestrator
+# Multi-service container deployment for Leeteam projects
+
+version: '3.8'
+
+services:
+  # ==================== Reverse Proxy ====================
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./shared/certs:/etc/nginx/certs:ro
+      - shared-logs:/var/log/nginx
+    networks:
+      - app-net
+    depends_on:
+      email-parser:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ==================== Email Parser Service ====================
+  email-parser:
+    build:
+      context: ./services/email-parser
+      dockerfile: Dockerfile
+    container_name: email-parser
+    expose:
+      - "8000"
+    env_file:
+      # 从 .env 文件加载环境变量 (如 IMAP_USER, IMAP_PASSWORD)
+      - ./services/email-parser/.env
+    volumes:
+      # 将宿主机的数据目录挂载到容器的/data目录，实现数据持久化
+      - ./shared/email-parser-data:/data
+      # 共享日志卷
+      - shared-logs:/var/log/app
+    environment:
+      # 数据库文件在容器内的路径，代码会读取这个变量
+      # 这个路径是容器架构的一部分，所以我们在此显式定义
+      - DATABASE_PATH=/data/email_index.db
+      - SERVICE_NAME=email-parser
+    networks:
+      - app-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# ==================== Networks ====================
+networks:
+  app-net:
+    driver: bridge
+    name: app-net
+
+# ==================== Volumes ====================
+volumes:
+  email-data:
+    name: email-data
+  shared-logs:
+    name: shared-logs

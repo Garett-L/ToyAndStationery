@@ -1,0 +1,27 @@
+# Web Framework
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.5.0
+
+# HTTP Client (for AI API calls)
+requests>=2.31.0
+httpx>=0.26.0
+
+# Environment
+python-dotenv>=1.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+
+# Code Quality
+ruff>=0.1.0
+
+# IMAP
+imap_tools>=1.0.0
+
+# HTML Parsing (for table preservation)
+beautifulsoup4>=4.12.0
+
+# DingTalk SDK
+alibabacloud_dingtalk>=2.0.0

@@ -1,0 +1,39 @@
+# Docker Compose Override for Local Development
+# This file is applied on top of docker-compose.yml
+# Use: docker-compose -f docker-compose.yml -f docker-compose.override.yml up
+
+version: '3.8'
+
+services:
+  # Enable volume mounts for code hot-reloading
+  
+  email-parser:
+    volumes:
+      - ./services/email-parser/src:/app/src
+    environment:
+      - DEBUG=true
+
+  toyfix-backend:
+    volumes:
+      - ./services/toyfix-system/backend/src:/app/src
+    environment:
+      - DEBUG=true
+
+  # Bind ports for local development (instead of nginx routing)
+  
+  dingtalk-frontend:
+    ports:
+      - "3000:3000"
+
+  dingtalk-auth:
+    ports:
+      - "3001:3001"
+
+  toyfix-frontend:
+    ports:
+      - "5173:5173"
+
+  # Skip nginx in dev (services run directly)
+  # nginx:
+  #   profiles:
+  #     - production
