@@ -1,8 +1,6 @@
 # docker-compose.yml - Root Orchestrator
 # Multi-service container deployment for Leeteam projects
 
-version: '3.8'
-
 services:
   # ==================== Reverse Proxy ====================
   nginx:
