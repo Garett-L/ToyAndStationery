@@ -39,13 +39,8 @@ jobs:
               --agree-tos --non-interactive --force-renewal \
               2>/dev/null || echo "证书已存在，跳过申请"
 
-            # 构建并启动容器
-            docker-compose -f docker-compose.yml build --pull email-parser nginx
-            docker-compose -f docker-compose.yml up -d
-            docker-compose -f docker-compose.yml ps
-
-            # 构建并启动容器
-            docker-compose -f docker-compose.yml build --pull email-parser nginx
+            # 拉取最新镜像并启动容器
+            docker-compose -f docker-compose.yml pull
             docker-compose -f docker-compose.yml up -d
             docker-compose -f docker-compose.yml ps
 
