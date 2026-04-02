@@ -39,6 +39,8 @@ services:
       # 从 .env 文件加载环境变量 (如 IMAP_USER, IMAP_PASSWORD)
       - ./services/email-parser/.env
     volumes:
+      # 代码目录挂载（改代码后 restart 即可生效，无需 rebuild）
+      - ./services/email-parser:/app
       # 将宿主机的数据目录挂载到容器的/data目录，实现数据持久化
       - ./shared/email-parser-data:/data
       # 共享日志卷
